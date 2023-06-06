@@ -450,7 +450,7 @@ namespace ratgdo {
         this->output_gdo_pin_->digital_write(false); // bring the line low
 
         delayMicroseconds(1260); // "LOW" pulse duration before the message start
-        this->swSerial.write(payload, CODE_LENGTH);
+        this->swSerial.write(this->txRollingCode, CODE_LENGTH);
     }
 
     void RATGDOComponent::sync()
