@@ -17,6 +17,8 @@
 #include "esphome/core/log.h"
 #include "esphome/core/preferences.h"
 
+#include "SoftwareSerial.h" // Using espsoftwareserial https://github.com/plerup/espsoftwareserial
+
 extern "C" {
 #include "secplus.h"
 }
