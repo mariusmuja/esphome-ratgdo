@@ -12,7 +12,6 @@
  ************************************/
 
 #pragma once
-#include "esphome/components/uart/uart.h"
 #include "esphome/core/component.h"
 #include "esphome/core/gpio.h"
 #include "esphome/core/log.h"

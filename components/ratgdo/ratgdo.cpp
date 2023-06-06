@@ -280,6 +280,8 @@ namespace ratgdo {
             this->store_.dryContactDoorOpen = false;
             openDoor();
         }
+        return;
+    }
 
         if (this->store_.dryContactDoorClose) {
             ESP_LOGD(TAG, "Dry Contact: close the door");
