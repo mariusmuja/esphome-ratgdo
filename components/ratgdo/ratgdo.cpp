@@ -137,6 +137,8 @@ namespace ratgdo {
     	delay(60); // 
 
         sync(); // reboot/sync to the opener on startup
+
+        delay(500); // wait for the opener to respond to the sync
     }
 
     void RATGDOComponent::loop()
