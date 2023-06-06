@@ -337,6 +337,7 @@ namespace ratgdo {
             return;
         }
         uint8_t serData = this->swSerial.read();
+        ESP_LOGD(TAG, "serData: %x", serData);
 
         static uint32_t msgStart;
         static bool reading = false;
