@@ -54,7 +54,7 @@ namespace ratgdo {
         static void IRAM_ATTR isrObstruction(RATGDOStore* arg);
     };
 
-    class RATGDOComponent : public uart::UARTDevice, public Component {
+    class RATGDOComponent : public Component {
     public:
         void setup() override;
         void loop() override;
@@ -62,6 +62,7 @@ namespace ratgdo {
         /********************************** GLOBAL VARS
          * *****************************************/
         uint32_t rollingCodeCounter;
+        EspSoftwareSerial::UART swSerial;
         uint8_t txRollingCode[CODE_LENGTH];
         uint8_t rxRollingCode[CODE_LENGTH];
         String doorStates[6] = { "unknown", "open", "closed", "stopped", "opening", "closing" };
