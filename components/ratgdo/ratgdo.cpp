@@ -92,13 +92,18 @@ namespace ratgdo {
 
     void RATGDOComponent::setup()
     {
+
+        this->output_gdo_pin_->setup();
+        this->input_gdo_pin_->setup();
+        this->input_gdo_pin_->pin_mode(gpio::FLAG_INPUT | gpio::FLAG_PULLUP);
+        this->input_obst_pin_->pin_mode(gpio::FLAG_INPUT);        
+        this->swSerial.begin(9600, SWSERIAL_8N1, this->input_gdo_pin_->get_pin(), this->output_gdo_pin_->get_pin(), true);
+
         this->pref_ = global_preferences->make_preference<int>(734874333U);
         if (!this->pref_.load(&this->rollingCodeCounter)) {
             this->rollingCodeCounter = 0;
         }
 
-        this->output_gdo_pin_->setup();
-        this->input_gdo_pin_->setup();
         this->input_obst_pin_->setup();
 
         this->trigger_open_pin_->setup();
@@ -122,10 +127,8 @@ namespace ratgdo {
         this->status_obst_pin_->pin_mode(gpio::FLAG_OUTPUT);
 
         this->output_gdo_pin_->pin_mode(gpio::FLAG_OUTPUT);
-        this->input_gdo_pin_->pin_mode(gpio::FLAG_INPUT | gpio::FLAG_PULLUP);
-        this->input_obst_pin_->pin_mode(gpio::FLAG_INPUT);
 
-        this->swSerial.begin(9600, SWSERIAL_8N1, this->input_gdo_pin_->get_pin(), this->output_gdo_pin_->get_pin(), true);
+
 
         this->trigger_open_pin_->attach_interrupt(RATGDOStore::isrDoorOpen, &this->store_, gpio::INTERRUPT_ANY_EDGE);
         this->trigger_close_pin_->attach_interrupt(RATGDOStore::isrDoorClose, &this->store_, gpio::INTERRUPT_ANY_EDGE);
