@@ -14,7 +14,7 @@
 #include "ratgdo.h"
 #include "ratgdo_child.h"
 #include "ratgdo_state.h"
-
+#include <chrono>
 #include "esphome/core/log.h"
 
 namespace esphome {
