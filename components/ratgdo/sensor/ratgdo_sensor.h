@@ -10,7 +10,8 @@ namespace esphome {
 namespace ratgdo {
 
     enum RATGDOSensorType {
-        RATGDO_OPENINGS
+        RATGDO_OPENINGS,
+        RATGDO_AUTO_CLOSE_TIME
     };
 
     class RATGDOSensor : public sensor::Sensor, public RATGDOClient, public Component {
