@@ -16,6 +16,7 @@
 #include "ratgdo_state.h"
 
 #include "esphome/core/log.h"
+#include "esphome/components/time/real_time_clock.h"
 
 namespace esphome {
 namespace ratgdo {
