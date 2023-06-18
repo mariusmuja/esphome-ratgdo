@@ -124,6 +124,12 @@ namespace ratgdo {
         } else if (cmd == 0x285) {
             this->motionState = MotionState::MOTION_STATE_DETECTED; // toggle bit
             ESP_LOGV(TAG, "Motion: %d (toggle)", this->motionState);
+        } else if (cmd == 0x40a) {
+            uint64_t newAutoCloseTime = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count() + ((byte1 << 8) | byte2);
+            if (newAutoCloseTime + 1 != this->autoCloseTime && newAutoCloseTime - 1 != this->autoCloseTime) {
+                this->autoCloseTime = newAutoCloseTime;
+                ESP_LOGV(TAG, "Auto close time: %d", this->autoCloseTime);
+            }
         } else {
             // 0x84 -- is it used?
             // ESP_LOGV(TAG, "Unknown command: cmd=%04x nibble=%02x byte1=%02x byte2=%02x fixed=%010"PRIx64" data=%08"PRIx32, cmd, nibble, byte1, byte2, fixed, data);
@@ -339,6 +345,13 @@ namespace ratgdo {
             }
             this->previousOpenings = this->openings;
         }
+        if (this->autoCloseTime != this->previousAutoCloseTime) {
+            ESP_LOGV(TAG, "Auto close time: %d", this->autoCloseTime);
+            for (auto* child : this->children_) {
+                child->on_auto_close_time_change(this->autoCloseTime);
+            }
+            this->previousAutoCloseTime = this->autoCloseTime;
+        }
     }
 
     void RATGDOComponent::query()
@@ -448,17 +461,6 @@ namespace ratgdo {
     void RATGDOComponent::toggleLight()
     {
         sendCommandAndSaveCounter(Command.LIGHT);
-    }
-
-    void RATGDOComponent::closeBeep()
-    {
-        transmit(Command.DOOR_BEEP1);
-        delay(40);
-        transmit(Command.DOOR_BEEP1);
-        delay(40);
-        transmit(Command.DOOR_BEEP2);
-        delay(40);                
-        sendCommandAndSaveCounter(Command.DOOR_BEEP3);
     }
 
     // Lock functions

@@ -10,11 +10,19 @@ namespace ratgdo {
     void RATGDOSensor::dump_config()
     {
         LOG_SENSOR("", "RATGDO Sensor", this);
-        ESP_LOGCONFIG(TAG, "  Type: Openings");
+        if (this->ratgdo_sensor_type_ == RATGDOSensorType::RATGDO_OPENINGS) { 
+            ESP_LOGCONFIG(TAG, "  Type: Openings");
+        } else {
+            ESP_LOGCONFIG(TAG, "  Type: Auto Close time");
+        }
     }
     void RATGDOSensor::on_openings_change(uint32_t openings)
     {
         this->publish_state(openings);
+    }
+    void RATGDOSensor::on_auto_close_time_change(uint64_t autoCloseTime)
+    {
+        this->publish_state(autoCloseTime);
     }
 
 } // namespace ratgdo

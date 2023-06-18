@@ -14,8 +14,6 @@ namespace ratgdo {
             ESP_LOGCONFIG(TAG, "  Type: Sync");
         } else if (this->button_type_ == ButtonType::RATGDO_QUERY) {
             ESP_LOGCONFIG(TAG, "  Type: Query");
-        } else if (this->button_type_ == ButtonType::RATGDO_CLOSE_BEEP) {
-            ESP_LOGCONFIG(TAG, "  Type: Close Beep");
         }
     }
 
@@ -25,8 +23,6 @@ namespace ratgdo {
             this->parent_->sync();
         } else if (this->button_type_ == ButtonType::RATGDO_QUERY) {
             this->parent_->query();
-        } else if (this->button_type_ == ButtonType::RATGDO_CLOSE_BEEP) {
-            this->parent_->closeBeep();
         }
     }
 

@@ -53,9 +53,6 @@ namespace ratgdo {
         cmd DOOR2;
         cmd LIGHT;
         cmd LOCK;
-        cmd DOOR_BEEP1;
-        cmd DOOR_BEEP2;
-        cmd DOOR_BEEP3;
     } cmds;
 
     const cmds Command = {
@@ -69,18 +66,6 @@ namespace ratgdo {
         .DOOR2 = (cmd) { 0x200000000, 0x01009280 },
         .LIGHT = (cmd) { 0x200000000, 0x00009281 },
         .LOCK = (cmd) { 0x0100000000, 0x0000728c },
-        .DOOR_BEEP1 = (cmd) {  0x400000000, 0x0000f10a },
-        .DOOR_BEEP2 = (cmd) { 0, 0x000b11a1 },
-        .DOOR_BEEP3 = (cmd) { 0, 0x000c61a1 },
-        // At auto close
-        // [18:09:45][V][ratgdo:098]: command: cmd=040a nibble=01 byte1=00 byte2=00 fixed=c4a3d2c00a data=0000f10a  Timer == 0
-        // [18:09:45][V][ratgdo:098]: command: cmd=040a nibble=01 byte1=00 byte2=00 fixed=c4a3d2c00a data=0000f10a  Timer == 0
-        // [18:09:45][V][ratgdo:098]: command: cmd=00a1 nibble=01 byte1=0b byte2=00 fixed=c0a3d2c00a data=000b11a1  close1?
-        // [18:09:53][V][ratgdo:098]: command: cmd=00a1 nibble=01 byte1=0c byte2=00 fixed=c0a3d2c00a data=000c61a1  close2?
-        // [18:09:54][V][ratgdo:098]: command: cmd=0081 nibble=05 byte1=60 byte2=42 fixed=c0a3d2c00a data=4260c581  status
-        // command: cmd=040a nibble=01 byte1=01 byte2=e0 fixed=c4a3d2c00a data=e001010a
-        // time = (byte1 << 8) | byte2;
-        // .AUTO_CLOSE = (cmd) { 0x0400000000, 0x0000010a },
     };
     struct RATGDOStore {
         ISRInternalGPIOPin input_obst;
@@ -101,6 +86,8 @@ namespace ratgdo {
 
         uint32_t rollingCodeCounter { 0 };
         uint32_t lastSyncedRollingCodeCounter { 0 };
+        uint64_t autoCloseTime { 0 };
+        uint64_t previousAutoCloseTime { 0 };
 
         uint16_t previousOpenings { 0 }; // number of times the door has been opened
         uint16_t openings { 0 }; // number of times the door has been opened
