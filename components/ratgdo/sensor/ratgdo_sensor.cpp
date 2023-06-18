@@ -18,11 +18,13 @@ namespace ratgdo {
     }
     void RATGDOSensor::on_openings_change(uint32_t openings)
     {
-        this->publish_state(openings);
+        if (this->ratgdo_sensor_type_ == RATGDOSensorType::RATGDO_OPENINGS)
+            this->publish_state(openings);
     }
     void RATGDOSensor::on_auto_close_time_change(uint64_t autoCloseTime)
     {
-        this->publish_state(autoCloseTime);
+        if (this->ratgdo_sensor_type_ == RATGDOSensorType::RATGDO_AUTO_CLOSE_TIME)
+            this->publish_state(autoCloseTime);
     }
 
 } // namespace ratgdo
