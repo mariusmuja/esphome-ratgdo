@@ -14,7 +14,7 @@
 #include "ratgdo.h"
 #include "ratgdo_child.h"
 #include "ratgdo_state.h"
-#include <chrono>
+
 #include "esphome/core/log.h"
 
 namespace esphome {
@@ -125,7 +125,7 @@ namespace ratgdo {
             this->motionState = MotionState::MOTION_STATE_DETECTED; // toggle bit
             ESP_LOGV(TAG, "Motion: %d (toggle)", this->motionState);
         } else if (cmd == 0x40a) {
-            uint64_t newAutoCloseTime = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count() + ((byte1 << 8) | byte2);
+            time_t newAutoCloseTime = RealTimeClock::timestamp_now() + ((byte1 << 8) | byte2);
             if (newAutoCloseTime + 1 != this->autoCloseTime && newAutoCloseTime - 1 != this->autoCloseTime) {
                 this->autoCloseTime = newAutoCloseTime;
                 ESP_LOGV(TAG, "Auto close time: %d", this->autoCloseTime);
