@@ -25,7 +25,6 @@ sensor:
     entity_category: diagnostic
     ratgdo_id: ${id_prefix}
     name: "Auto close time"
-    unit_of_measurement: "time"
     device_class: timestamp
 
 switch:
