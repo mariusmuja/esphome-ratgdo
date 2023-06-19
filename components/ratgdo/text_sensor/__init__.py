@@ -8,11 +8,11 @@ from .. import RATGDO_CLIENT_SCHMEA, ratgdo_ns, register_ratgdo_child
 DEPENDENCIES = ["ratgdo"]
 
 RATGDOSensor = ratgdo_ns.class_("RATGDOSensor", sensor.Sensor, cg.Component)
-RATGDOSensorType = ratgdo_ns.enum("RATGDOSensorType")
+RATGDOTextSensorType = ratgdo_ns.enum("RATGDOTextSensorType")
 
 CONF_TYPE = "type"
 TYPES = {
-    "openings": RATGDOSensorType.RATGDO_OPENINGS,
+    "auto_close_time": RATGDOTextSensorType.RATGDO_AUTO_CLOSE_TIME,
 }
 
 

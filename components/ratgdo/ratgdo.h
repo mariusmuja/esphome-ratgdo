@@ -13,11 +13,11 @@
 
 #pragma once
 #include "SoftwareSerial.h" // Using espsoftwareserial https://github.com/plerup/espsoftwareserial
+#include "esphome/components/time/real_time_clock.h"
 #include "esphome/core/component.h"
 #include "esphome/core/gpio.h"
 #include "esphome/core/log.h"
 #include "esphome/core/preferences.h"
-#include "esphome/components/time/real_time_clock.h"
 
 extern "C" {
 #include "secplus.h"

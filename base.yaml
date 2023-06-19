@@ -19,6 +19,8 @@ sensor:
     name: "Openings"
     unit_of_measurement: "openings"
     icon: mdi:open-in-app
+
+text_sensor:
   - platform: ratgdo
     id: ${id_prefix}_auto_close_time
     type: auto_close_time
