@@ -7,7 +7,7 @@ namespace esphome {
 namespace ratgdo {
 
     static const char* const TAG = "ratgdo.sensor";
-    char timeString[21];
+    char timeString[std::size("yyyy-mm-ddThh:mm:ssZ")];
 
     void RATGDOSensor::dump_config()
     {
@@ -27,7 +27,7 @@ namespace ratgdo {
     {
         if (this->ratgdo_sensor_type_ == RATGDOSensorType::RATGDO_AUTO_CLOSE_TIME) {
             std::strftime(std::data(timeString), std::size(timeString), "%FT%TZ", std::gmtime(&autoCloseTime));
-            this->publish_state(timeString);
+            this->publish_state(*timeString);
         }
     }
 
