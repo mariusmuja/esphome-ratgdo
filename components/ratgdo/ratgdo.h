@@ -17,7 +17,7 @@
 #include "esphome/core/gpio.h"
 #include "esphome/core/log.h"
 #include "esphome/core/preferences.h"
-#include "esphome/core/time.h"
+#include "esphome/components/time/real_time_clock.h"
 
 extern "C" {
 #include "secplus.h"
