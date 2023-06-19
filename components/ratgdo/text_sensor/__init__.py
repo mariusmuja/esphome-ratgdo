@@ -1,13 +1,13 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
-from esphome.components import sensor
+from esphome.components import text_sensor
 from esphome.const import CONF_ID
 
 from .. import RATGDO_CLIENT_SCHMEA, ratgdo_ns, register_ratgdo_child
 
 DEPENDENCIES = ["ratgdo"]
 
-RATGDOSensor = ratgdo_ns.class_("RATGDOSensor", sensor.Sensor, cg.Component)
+RATGDOSensor = ratgdo_ns.class_("RATGDOTextSensor", text_sensor.TextSensor, cg.Component)
 RATGDOTextSensorType = ratgdo_ns.enum("RATGDOTextSensorType")
 
 CONF_TYPE = "type"
