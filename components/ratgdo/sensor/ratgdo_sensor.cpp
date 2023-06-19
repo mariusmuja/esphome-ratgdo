@@ -27,6 +27,7 @@ namespace ratgdo {
     {
         if (this->ratgdo_sensor_type_ == RATGDOSensorType::RATGDO_AUTO_CLOSE_TIME) {
             std::strftime(std::data(timeString), std::size(timeString), "%FT%TZ", std::gmtime(&autoCloseTime));
+            ESP_LOGV(TAG, "Auto close time: %s", timeString);
             this->publish_state(*timeString);
         }
     }
