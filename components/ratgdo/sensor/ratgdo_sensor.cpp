@@ -7,7 +7,7 @@ namespace esphome {
 namespace ratgdo {
 
     static const char* const TAG = "ratgdo.sensor";
-    char timeString[std::size("yyyy-mm-ddThh:mm:ssZ")];
+    char timeString[21];
 
     void RATGDOSensor::dump_config()
     {
