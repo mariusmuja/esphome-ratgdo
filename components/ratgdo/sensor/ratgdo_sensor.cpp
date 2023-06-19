@@ -1,6 +1,7 @@
 #include "ratgdo_sensor.h"
 #include "../ratgdo_state.h"
 #include "esphome/core/log.h"
+#include <ctime>
 
 namespace esphome {
 namespace ratgdo {
@@ -23,8 +24,11 @@ namespace ratgdo {
     }
     void RATGDOSensor::on_auto_close_time_change(time_t autoCloseTime)
     {
-        if (this->ratgdo_sensor_type_ == RATGDOSensorType::RATGDO_AUTO_CLOSE_TIME)
-            this->publish_state(ESPTime::from_epoch_utc(autoCloseTime)->strftime("%Y%m%dT%H%M%SZ"));
+        if (this->ratgdo_sensor_type_ == RATGDOSensorType::RATGDO_AUTO_CLOSE_TIME) {
+            char timeString[std::size("yyyy-mm-ddThh:mm:ssZ")];
+            std::strftime(std::data(timeString), std::size(timeString), "%FT%TZ", std::gmtime(&autoCloseTime));
+            this->publish_state(timeString);
+        }
     }
 
 } // namespace ratgdo
