@@ -11,7 +11,7 @@ namespace ratgdo {
 
     void RATGDOSensor::dump_config()
     {
-        LOG_SENSOR("", "RATGDO Sensor", this);
+        LOG_TEXT_SENSOR("", "RATGDO Sensor", this);
         ESP_LOGCONFIG(TAG, "  Type: Auto Close time");
     }
 
