@@ -13,7 +13,7 @@ namespace ratgdo {
         RATGDO_AUTO_CLOSE_TIME
     };
 
-    class RATGDOSensor : public text_sensor::TextSensor, public RATGDOClient, public Component {
+    class RATGDOTextSensor : public text_sensor::TextSensor, public RATGDOClient, public Component {
     public:
         void dump_config() override;
         void set_ratgdo_sensor_type(RATGDOTextSensorType ratgdo_sensor_type_) { this->ratgdo_sensor_type_ = ratgdo_sensor_type_; }
