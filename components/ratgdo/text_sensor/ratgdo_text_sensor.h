@@ -3,7 +3,7 @@
 #include "../ratgdo.h"
 #include "../ratgdo_child.h"
 #include "../ratgdo_state.h"
-#include "esphome/components/sensor/sensor.h"
+#include "esphome/components/text_sensor/text_sensor.h"
 #include "esphome/core/component.h"
 
 namespace esphome {
