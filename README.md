@@ -3,7 +3,10 @@
 
 This is a port of the ratgdo software for the v2 board to ESPHome.
 
-[Visit the github.io page to purchase boards](https://paulwieland.github.io/ratgdo/#order)
+
+If you can, [Visit the github.io page to purchase boards](https://paulwieland.github.io/ratgdo/#order). In case you are in one of the countries that Paul cannot ship to, below is a minimal schematic that allows you to use this project to communicate with the garage opener:
+
+![Schematic](static/gdo_schematic.png)
 
 ## Moving from stock ratgdo
 
