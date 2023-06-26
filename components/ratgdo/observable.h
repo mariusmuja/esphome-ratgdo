@@ -30,12 +30,12 @@ namespace ratgdo {
         template <typename Observer>
         void subscribe(Observer&& observer)
         {
-            this->observers.push_back(std::forward<Observer>(observer));
+            this->observers_.push_back(std::forward<Observer>(observer));
         }
 
-        void notify()
+        void notify() const
         {
-            for (const auto& observer : observers) {
+            for (const auto& observer : observers_) {
                 observer(value);
             }
         }
@@ -43,7 +43,7 @@ namespace ratgdo {
         T value;
 
     private:
-        std::vector<std::function<void(T)>> observers;
+        std::vector<std::function<void(T)>> observers_;
     };
 
 } // namespace ratgdo
