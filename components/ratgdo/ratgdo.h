@@ -206,7 +206,6 @@ namespace ratgdo {
         void subscribe_closing_duration(std::function<void(float)>&& f);
         void subscribe_openings(std::function<void(uint16_t)>&& f);
         void subscribe_door_state(std::function<void(DoorState, float)>&& f);
-        void subscribe_door_position(std::function<void(float)>&& f);
         void subscribe_light_state(std::function<void(LightState)>&& f);
         void subscribe_lock_state(std::function<void(LockState)>&& f);
         void subscribe_obstruction_state(std::function<void(ObstructionState)>&& f);
