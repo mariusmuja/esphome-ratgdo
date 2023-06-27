@@ -13,6 +13,7 @@
 
 #pragma once
 #include "SoftwareSerial.h" // Using espsoftwareserial https://github.com/plerup/espsoftwareserial
+#include "enum.h"
 #include "esphome/core/component.h"
 #include "esphome/core/gpio.h"
 #include "esphome/core/log.h"
@@ -79,35 +80,37 @@ namespace ratgdo {
         const uint32_t DOOR_STOP = 3;
     }
 
-    namespace command {
+    ENUM(Command, uint64_t,
+        (UNKNOWN, 0x000),
+        (GET_STATUS, 0x080),
+        (STATUS, 0x081),
+        (OBST_1, 0x084), // sent when an obstruction happens?
+        (OBST_2, 0x085), // sent when an obstruction happens?
+        (PAIR_3, 0x0a0),
+        (PAIR_3_RESP, 0x0a1),
 
-        enum cmd : uint64_t {
-            GET_STATUS = 0x080,
-            STATUS = 0x081,
-            OBST_1 = 0x084, // sent when an obstruction happens?
-            OBST_2 = 0x085, // sent when an obstruction happens?
-            PAIR_3 = 0x0a0,
-            PAIR_3_RESP = 0x0a1,
+        (LEARN_2, 0x181),
+        (LOCK, 0x18c),
+        (OPEN, 0x280),
+        (LIGHT, 0x281),
+        (MOTOR_ON, 0x284),
+        (MOTION, 0x285),
 
-            LEARN_2 = 0x181,
-            LOCK = 0x18c,
+        (LEARN_1, 0x391),
+        (LEARN_3, 0x392),
+        (LEARN_3_RESP, 0x393),
 
-            OPEN = 0x280,
-            LIGHT = 0x281,
-            MOTOR_ON = 0x284,
-            MOTION = 0x285,
+        (PAIR_2, 0x400),
+        (PAIR_2_RESP, 0x401),
+        (SET_TTC, 0x402), // time, (byte1<<8)+byte2
+        (CANCEL_TTC, 0x408), // ?
+        (TTC, 0x40a), // Time to close
+        (GET_OPENINGS, 0x48b),
+        (OPENINGS, 0x48c), )
 
-            LEARN_1 = 0x391,
-            LEARN_3 = 0x392,
-            LEARN_3_RESP = 0x393,
-
-            PAIR_2 = 0x400,
-            PAIR_2_RESP = 0x401,
-            TTC = 0x40a, // Time to close
-            GET_OPENINGS = 0x48b,
-            OPENINGS = 0x48c,
-
-        };
+    inline bool operator==(const uint64_t some, const Command& other)
+    {
+        return some == static_cast<uint64_t>(other);
     }
 
     struct RATGDOStore {
@@ -139,16 +142,16 @@ namespace ratgdo {
 
         observable<uint16_t> openings { 0 }; // number of times the door has been opened
 
-        observable<DoorState> door_state { DoorState::DOOR_STATE_UNKNOWN };
+        observable<DoorState> door_state { DoorState::UNKNOWN };
         observable<float> door_position { DOOR_POSITION_UNKNOWN };
         bool moving_to_position { false };
 
-        observable<LightState> light_state { LightState::LIGHT_STATE_UNKNOWN };
-        observable<LockState> lock_state { LockState::LOCK_STATE_UNKNOWN };
-        observable<ObstructionState> obstruction_state { ObstructionState::OBSTRUCTION_STATE_UNKNOWN };
-        observable<MotorState> motor_state { MotorState::MOTOR_STATE_UNKNOWN };
-        observable<ButtonState> button_state { ButtonState::BUTTON_STATE_UNKNOWN };
-        observable<MotionState> motion_state { MotionState::MOTION_STATE_UNKNOWN };
+        observable<LightState> light_state { LightState::UNKNOWN };
+        observable<LockState> lock_state { LockState::UNKNOWN };
+        observable<ObstructionState> obstruction_state { ObstructionState::UNKNOWN };
+        observable<MotorState> motor_state { MotorState::UNKNOWN };
+        observable<ButtonState> button_state { ButtonState::UNKNOWN };
+        observable<MotionState> motion_state { MotionState::UNKNOWN };
 
         void set_output_gdo_pin(InternalGPIOPin* pin) { this->output_gdo_pin_ = pin; };
         void set_input_gdo_pin(InternalGPIOPin* pin) { this->input_gdo_pin_ = pin; };
@@ -158,16 +161,15 @@ namespace ratgdo {
         void gdo_state_loop();
         uint16_t read_rolling_code();
         void obstruction_loop();
-        void transmit(command::cmd command, uint32_t data = 0, bool increment = true);
-        void compute_rolling_code(command::cmd command, uint32_t data, bool increment);
+        void transmit(Command command, uint32_t data = 0, bool increment = true);
+        void compute_rolling_code(Command command, uint32_t data, bool increment);
         void print_rolling_code();
 
         void increment_rolling_code_counter(int delta = 1);
         void set_rolling_code_counter(uint32_t counter);
         void save_rolling_code_counter();
 
-
-        // door 
+        // door
         void door_command(uint32_t data);
         void toggle_door();
         void open_door();
